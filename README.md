@@ -1,3 +1,10 @@
+WIP
+work done till now:
+- Show list of all books
+- Add new book
+- Edit book requires some improvements 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
