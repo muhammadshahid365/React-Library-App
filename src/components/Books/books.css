@@ -1,0 +1,22 @@
+body{
+  background-color: rgb(236, 235, 235);
+}
+
+.books-container{
+  max-width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.books-container p{
+  text-align: left;
+}
+
+.heading{
+  margin: 0 auto;
+  max-width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
