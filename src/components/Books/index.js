@@ -35,7 +35,7 @@ const Index = () => {
                 <hr />
                 <p>Borrowed by: {book.borrowed_by}</p>
                 <p>Borrowed on: {
-                  book.expected_date_of_return ?
+                  book.date_of_borrow ?
                   new Date(book.date_of_borrow).toDateString() :
                   null
                 }

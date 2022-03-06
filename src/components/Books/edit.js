@@ -14,21 +14,28 @@ const Edit = (props) => {
   const { id } = useParams();
 
   useEffect(() => {
-    getBook(id, setBook, setAllValues)
-  }, [])
+    const getData = async () => {
+      const response = await axios.get(`http://localhost:8080/books?id=${id}`);
+      const book = response.data[0];
+      setBook(book);
+      setName(book.book_name);
+      setAuthor(book.author);
+      const booking_date = book.date_of_borrow;
+      if(booking_date){
+        setBorrowDate(new Date(booking_date).toISOString().split('T')[0])
+      }
+      const return_date = book.expected_date_of_return;
+      if(return_date){
+        setReturnDate(new Date(return_date).toISOString().split('T')[0])
+      }
+    }
 
-  const setAllValues = () => {
-    console.log(book);
-    setName(book.book_name)
-    // setAuthor(book.author)
-    // setBorrowedBy(book.borrowed_by)
-    // setBorrowDate(book.date_of_borrow)
-    // setReturnDate(book.expected_date_of_return)
-  }
+    getData();
+  }, [])
 
   const handleUpdateBook = async () => {
     await axios.patch(
-      'http://localhost:8080/books',
+      `http://localhost:8080/books?id=${book.id}`,
       bookParams()
     )
     window.location = '/books'
@@ -88,12 +95,6 @@ const Edit = (props) => {
       </Card>
     </div>
   )
-}
-
-const getBook = async (id, setBook, setAllValues) => {
-  const response = await axios.get(`http://localhost:8080/books?id=${id}`);
-  setBook(response.data[0]);
-  setAllValues()
 }
 
 export default Edit
