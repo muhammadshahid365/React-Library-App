@@ -10,24 +10,29 @@ const Edit = (props) => {
   const [borrowedBy, setBorrowedBy] = useState('')
   const [borrowDate, setBorrowDate] = useState('')
   const [returnDate, setReturnDate] = useState('')
-  const [students, setStudents] = useState([])
+  const [allStudents, setStudents] = useState([])
   const { id } = useParams();
 
   useEffect(() => {
     const getData = async () => {
-      const response = await axios.get(`http://localhost:8080/books?id=${id}`);
+      let response = await axios.get(`http://localhost:8080/books?id=${id}`);
       const book = response.data[0];
       setBook(book);
       setName(book.book_name);
       setAuthor(book.author);
+      setBorrowedBy(book.borrowed_by);
       const booking_date = book.date_of_borrow;
       if(booking_date){
-        setBorrowDate(new Date(booking_date).toISOString().split('T')[0])
+        setBorrowDate(new Date(booking_date).toISOString().split('T')[0]);
       }
       const return_date = book.expected_date_of_return;
       if(return_date){
-        setReturnDate(new Date(return_date).toISOString().split('T')[0])
+        setReturnDate(new Date(return_date).toISOString().split('T')[0]);
       }
+
+      response = await axios.get('http://localhost:8080/students');
+      const students = response.data;
+      setStudents(students);
     }
 
     getData();
@@ -44,7 +49,7 @@ const Edit = (props) => {
   const bookParams = () => ({
     book_name: name,
     author,
-    // borrowed_by: borrowedBy,
+    borrowed_by: borrowedBy,
     date_of_borrow: borrowDate ? borrowDate : null,
     expected_date_of_return: returnDate ? returnDate : null
   });
@@ -75,9 +80,9 @@ const Edit = (props) => {
                 onChange={e => setBorrowedBy(e.target.value)}
               >
                 {
-                  students.map(student => {
+                  allStudents.map(student => (
                     <MenuItem value={student.id}>{`${student.first_name} ${student.last_name}`}</MenuItem>
-                  })
+                  ))
                 }
               </Select>
             </FormControl>

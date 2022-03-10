@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import './books.css'
 import { Button, Card } from '@mui/material';
+import axios from 'axios';
 
 const Index = () => {
   const [books, setBooks] = useState([])
+  const [allStudents, setStudents] = useState([])
 
   useEffect(() => {
-    getBooks(setBooks)
+    const getData = async () => {
+      await getBooks(setBooks);
+      const response = await axios.get('http://localhost:8080/students');
+      const students = response.data;
+      setStudents(students);
+    }
+    
+    getData();
   }, [])
 
   return (
@@ -33,7 +42,13 @@ const Index = () => {
                 <h3>{book.book_name}</h3>
                 <p>By: {book.author}</p>
                 <hr />
-                <p>Borrowed by: {book.borrowed_by}</p>
+                <p>Borrowed by: {
+                  book.borrowed_by ?
+                  allStudents.find(
+                    student => student.id == book.borrowed_by
+                  )?.first_name : null
+                  }
+                </p>
                 <p>Borrowed on: {
                   book.date_of_borrow ?
                   new Date(book.date_of_borrow).toDateString() :
