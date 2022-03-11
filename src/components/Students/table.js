@@ -7,9 +7,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom'
 
 
 export default function BasicTable(props) {
+  const navigate = useNavigate();
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -36,7 +38,7 @@ export default function BasicTable(props) {
                 <Button
                   variant='outlined'
                   color='warning'
-                  onClick={() => window.location = `/students/${row.id}`}
+                  onClick={() => navigate(`/students/${row.id}`)}
                 >
                   Edit
                 </Button>

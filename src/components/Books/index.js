@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './books.css'
 import { Button, Card } from '@mui/material';
 import axios from 'axios';
@@ -6,6 +7,7 @@ import axios from 'axios';
 const Index = () => {
   const [books, setBooks] = useState([])
   const [allStudents, setStudents] = useState([])
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
@@ -17,6 +19,10 @@ const Index = () => {
     
     getData();
   }, [])
+
+  const handleAddButton = () => {
+    navigate('/books/new');
+  }
 
   return (
     <div>
@@ -78,10 +84,6 @@ const getBooks = async setBooks => {
   });
   const json = await response.json()
   setBooks(json)
-}
-
-const handleAddButton = () => {
-  window.location = '/books/new'
 }
 
 export default Index

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Card, TextField, Grid, Select, MenuItem, InputLabel, FormControl, Button } from '@mui/material'
 import axios from 'axios'
 import { useParams } from 'react-router'
@@ -12,6 +13,7 @@ const Edit = (props) => {
   const [returnDate, setReturnDate] = useState('')
   const [allStudents, setStudents] = useState([])
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
@@ -43,7 +45,7 @@ const Edit = (props) => {
       `http://localhost:8080/books?id=${book.id}`,
       bookParams()
     )
-    window.location = '/books'
+    navigate('/books');
   }
 
   const bookParams = () => ({

@@ -1,11 +1,13 @@
 import { Button } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import StudentsTable from './table'
+import { useNavigate } from 'react-router-dom'
 import './students.css'
 import axios from 'axios'
 
 const Index = () => {
   const [allStudents, setAllStudents] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
@@ -15,6 +17,11 @@ const Index = () => {
 
     getData();
   }, [])
+
+  const handleAddButton = (e) => {
+    navigate('/students/new')
+  }
+
   return (
     <div>
       <div className="heading">
@@ -32,10 +39,6 @@ const Index = () => {
       </div>
     </div>
   )
-}
-
-const handleAddButton = () => {
-  window.location = '/students/new'
 }
 
 export default Index

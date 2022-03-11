@@ -12,8 +12,8 @@ import EditStudent from './components/Students/edit';
 function App() {
   return (
     <div className="App">
-      <AppBar />
       <Router>
+        <AppBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />

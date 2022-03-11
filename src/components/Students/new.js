@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { Card, TextField, Grid, Select, MenuItem, InputLabel, FormControl, Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const New = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const navigate = useNavigate();
 
   const handleAddStudent = async () => {
     await axios.post(
@@ -13,7 +15,7 @@ const New = () => {
         last_name: lastName
       }
     )
-    window.location = '/students'
+    navigate('/students')
   }
 
   return (
