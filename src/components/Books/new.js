@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, TextField, Grid, Select, MenuItem, InputLabel, FormControl, Button } from '@mui/material'
 import axios from 'axios'
 
@@ -8,7 +8,17 @@ const New = () => {
   const [borrowedBy, setBorrowedBy] = useState('')
   const [borrowDate, setBorrowDate] = useState('')
   const [returnDate, setReturnDate] = useState('')
-  const [students, setStudents] = useState([])
+  const [allStudents, setStudents] = useState([])
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await axios.get('http://localhost:8080/students');
+      const students = response.data;
+      setStudents(students);
+    }
+
+    getData();
+  }, [])
 
   const handleAddBook = async () => {
     await axios.post(
@@ -21,6 +31,7 @@ const New = () => {
   const bookParams = () => ({
     book_name: name,
     author,
+    borrowed_by: borrowedBy,
     date_of_borrow: borrowDate ? borrowDate : null,
     expected_date_of_return: returnDate ? returnDate : null
   });
@@ -51,9 +62,9 @@ const New = () => {
                 onChange={e => setBorrowedBy(e.target.value)}
               >
                 {
-                  students.map(student => {
+                  allStudents.map(student => (
                     <MenuItem value={student.id}>{`${student.first_name} ${student.last_name}`}</MenuItem>
-                  })
+                  ))
                 }
               </Select>
             </FormControl>
